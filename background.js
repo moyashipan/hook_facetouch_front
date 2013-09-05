@@ -56,7 +56,14 @@ function parseSendMail(details) {
 	var user_id = details.requestBody.formData.user_id.join('');
 	var user = members[user_id];
 	if (!user) return;
-
-	// TODO: Post somewhere!
+	if (localStorage['calling_api']) {
+		$.post(
+			localStorage['calling_api'],
+			{
+				user: user
+			},
+			console.log
+		);
+	}
 }
 

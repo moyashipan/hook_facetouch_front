@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 
-	"name": "HookFaceTouch",
+	"name": "Hook Facetouch Front",
 	"description": "FaceTouchからのHTTPリクエストをフックしてIRCに通知を行います",
 	"version": "0.1",
 
@@ -10,6 +10,7 @@
 	"background": {
 		"scripts": ["lib/jquery.min.js", "background.js"]
 	},
+	"options_page": "options.html",
 	"permissions": [
 		"webRequest",
 		"https://www.facetouch.jp/*"
