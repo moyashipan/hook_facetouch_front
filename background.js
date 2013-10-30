@@ -45,6 +45,12 @@ function parseFrontLogin(details) {
 			$.each(data.members, function(){
 				members[this.user_id] = this;
 			});
+			$.each(data.posts, function(){
+				var post_name = this.post_name;
+				$.each(this.members, function(){
+					members[this]['post_name'] = post_name;
+				});
+			})
 		}
 	);
 }
