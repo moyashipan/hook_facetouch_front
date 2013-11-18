@@ -2,6 +2,7 @@ var members = [];
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function(details){
+		// TODO: URL何回も書いてるのをやめる
 		switch (details.url) {
 		case "https://www.facetouch.jp/webApi/frontLogin":
 			parseFrontLogin(details);
@@ -9,9 +10,11 @@ chrome.webRequest.onBeforeRequest.addListener(
 		case "https://www.facetouch.jp/webApi/getMemberDetail":
 			parseGetMemberDetail(details);
 			break;
-		case "https://www.facetouch.jp/webApi/sendMail":
-			parseSendMail(details);
-			break;
+		default:
+			if (details.url.indexOf('https://www.facetouch.jp/webApi/v2/8/callUser/') == 0) {
+				parseSendMail(details);
+				break;
+			}
 		}
 		return details;
 	},
@@ -19,7 +22,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		urls: [
 			"https://www.facetouch.jp/webApi/frontLogin",
 			"https://www.facetouch.jp/webApi/getMemberDetail",
-			"https://www.facetouch.jp/webApi/sendMail"
+			"https://www.facetouch.jp/webApi/v2/8/callUser/*" // TODO: 会社ID(8)を省く
 		]
 	},
 	[
@@ -55,11 +58,13 @@ function parseFrontLogin(details) {
 		formData,
 		function(data){
 			$.each(data.members, function(){
-				members[this.user_id] = this;
+				var member = convertKeyNames(this);
+				members[member.user_id] = member;
 			});
 			$.each(data.posts, function(){
-				var post_name = this.post_name;
-				$.each(this.members, function(){
+				var post = convertKeyNames(this);
+				var post_name = post.post_name;
+				$.each(post.members, function(){
 					members[this]['post_name'] = post_name;
 				});
 			})
@@ -71,7 +76,7 @@ function parseGetMemberDetail(details) {
 }
 
 function parseSendMail(details) {
-	var user_id = details.requestBody.formData.user_id.join('');
+	var user_id = parseInt(details.url.replace('https://www.facetouch.jp/webApi/v2/8/callUser/', ''));
 	var user = members[user_id];
 	if (!user) return;
 	if (localStorage['calling_api']) {
