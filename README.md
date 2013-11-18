@@ -17,6 +17,7 @@ Array
     [family_name_kana] => モヤモト
     [first_name_kana] => パンイチロウ
     [post_id1] => 12345
+    [post_name] => 開発 # 独自に追加
     [comment] =>
     [backoffice_tantou_flag] => false
     [substitute] =>
