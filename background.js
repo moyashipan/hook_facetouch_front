@@ -27,6 +27,18 @@ chrome.webRequest.onBeforeRequest.addListener(
 	]
 );
 
+function convertKeyNames(source) {
+	var retval = {};
+	$.each(source, function(i){
+		retval[camelcaseToSnakecase(i)] = this;
+	})
+	return retval;
+}
+
+function camelcaseToSnakecase(s) {
+	return s.replace(/([a-z])([A-Z])/g, "$1_$2").toLowerCase();
+}
+
 function parseFrontLogin(details) {
 	// 2回目のリクエストであれば無視
 	if (details.requestBody.formData.second) return;
