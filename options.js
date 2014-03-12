@@ -1,5 +1,10 @@
-$('#calling_api')
-	.val(localStorage["calling_api"])
-	.on('input', function(){
-		localStorage["calling_api"] = $(this).val();
-	});
+$.each(
+	['calling_api', 'idobata_api'],
+	function(i, key) {
+		$('#' + key)
+			.val(localStorage[key])
+			.on('input', function(){
+				localStorage[key] = $(this).val();
+			});
+	}
+)
