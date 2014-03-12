@@ -9,7 +9,7 @@
 	},
 
 	"background": {
-		"scripts": ["lib/jquery.min.js", "background.js"]
+		"scripts": ["lib/jquery.min.js", "background.js", "lib/sprintf.min.js"]
 	},
 	"options_page": "options.html",
 	"permissions": [
