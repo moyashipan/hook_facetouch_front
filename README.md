@@ -4,7 +4,7 @@ hook_facetouch_front
 Messaging from FaceTouch to IRC
 
 
-user情報の例
+### user情報の例
 ```
 Array
 (
@@ -23,3 +23,19 @@ Array
     [substitute] =>
 )
 ```
+
+### How to use
+0. Set the Facetouch to your office!
+
+1. [Install extension for Chrome][install]
+
+2. Open extension's option page
+
+3. Input API URL(s)
+
+4. Open [Facetouch Front][facetouch-front] on Chrome
+
+5. Call someone!
+
+[install]: https://chrome.google.com/webstore/detail/hook-facetouch-front/ekpikmnnbikmmaheeolcmlijhmmggkoo
+[facetouch-front]: https://www.facetouch.jp/front/
