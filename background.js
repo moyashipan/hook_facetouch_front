@@ -89,7 +89,7 @@ function parseSendMail(details) {
 		);
 	}
 	if (localStorage['idobata_api']) {
-		var pattern = '[%s] @%s: %sさん、お客様がお見えになりました。';
+		var pattern = '[%s] @%s : %sさん、お客様がお見えになりました。';
 		var source = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name);
 		$.post(
 			localStorage['idobata_api'],
