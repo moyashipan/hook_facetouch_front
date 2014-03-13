@@ -3,7 +3,7 @@
 
 	"name": "Hook Facetouch Front",
 	"description": "FaceTouchからのHTTPリクエストをフックしてIRCに通知を行います",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"icons": {
 		"128": "icon128.png"
 	},
