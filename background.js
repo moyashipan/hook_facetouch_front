@@ -75,6 +75,53 @@ function parseFrontLogin(details) {
 function parseGetMemberDetail(details) {
 }
 
+function postToIdobata(source) {
+	$.post(
+		localStorage['idobata_api'],
+		{
+			source: source,
+			format: 'html'
+		},
+		function(){}
+	);
+}
+
+function getCamera(callback) {
+	if(navigator.webkitGetUserMedia) {
+		navigator.webkitGetUserMedia(
+			{ video:true },
+			function(stream) {
+				var video = document.createElement('video');
+				var url = window.webkitURL.createObjectURL(stream);
+				video.src = url;
+
+				var canvas = document.createElement('canvas');
+				canvas.width = 160;
+				canvas.height = 120;
+				var context = canvas.getContext('2d');
+				setTimeout(function(){
+					context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+					var type = 'image/jpeg';
+					var dataurl = canvas.toDataURL(type);
+					var bin = atob(dataurl.split(',')[1]);
+					var buffer = new Uint8Array(bin.length);
+					for (var i = 0; i < bin.length; i++) {
+						buffer[i] = bin.charCodeAt(i);
+					}
+					var blob = new Blob([buffer.buffer], {type: type});
+
+					callback.call(null, blob);
+					video.src=null;
+				}, 1000);
+			},
+			function (error){}
+		);
+	} else {
+		callback.call(null, null);
+	}
+}
+
 function parseSendMail(details) {
 	var user_id = parseInt(details.url.replace('https://www.facetouch.jp/webApi/v2/8/callUser/', ''));
 	var user = members[user_id];
@@ -85,19 +132,36 @@ function parseSendMail(details) {
 			{
 				user: user
 			},
-			console.log
+			function(){}
 		);
 	}
 	if (localStorage['idobata_api']) {
-		var pattern = '[%s] @%s : %sさん、お客様がお見えになりました。';
-		var source = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name);
-		$.post(
-			localStorage['idobata_api'],
-			{
-				source: source
-			},
-			console.log
-		);
+		getCamera(function(blob){
+			if (blob && localStorage['gyazo_api']) {
+				var data = new FormData();
+				data.append('imagedata', blob);
+				data.append('id', ''); // TODO: set gyazo id
+				$.ajax({
+					url: localStorage['gyazo_api'],
+					data: data,
+					cache: false,
+					processData: false,
+					contentType: false,
+					type: 'POST'
+				}).done(function(gyazo_url){
+					var pattern = '[%s] @%s : %sさん、お客様がお見えになりました。<img src="%s" />';
+					var source = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name, gyazo_url);
+					postToIdobata(source);
+				}).fail(function(msg){
+					console.log('fail');
+					console.log(msg);
+				});
+			} else {
+				var pattern = '[%s] @%s : %sさん、お客様がお見えになりました。';
+				var source = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name);
+				postToIdobata(source);
+			}
+		});
 	}
 }
 

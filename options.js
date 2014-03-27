@@ -1,5 +1,5 @@
 $.each(
-	['calling_api', 'idobata_api'],
+	['calling_api', 'idobata_api', 'gyazo_api'],
 	function(i, key) {
 		$('#' + key)
 			.val(localStorage[key])
@@ -8,3 +8,11 @@ $.each(
 			});
 	}
 )
+
+if(navigator.webkitGetUserMedia) {
+	navigator.webkitGetUserMedia(
+		{ video:true },
+		function (stream){},
+		function (error){}
+	);
+}
