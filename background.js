@@ -79,8 +79,7 @@ function postToIdobata(source) {
 	$.post(
 		localStorage['idobata_api'],
 		{
-			source: source,
-			format: 'html'
+			source: source
 		},
 		function(){}
 	);
@@ -149,7 +148,7 @@ function parseSendMail(details) {
 					contentType: false,
 					type: 'POST'
 				}).done(function(gyazo_url){
-					var pattern = '[%s] @%s : %sさん、お客様がお見えになりました。<img src="%s" />';
+					var pattern = "[%s] @%s : %sさん、お客様がお見えになりました。\n%s";
 					var source = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name, gyazo_url);
 					postToIdobata(source);
 				}).fail(function(msg){
