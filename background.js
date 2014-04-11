@@ -148,8 +148,16 @@ function parseSendMail(details) {
           contentType: false,
           type: 'POST'
         }).done(function(gyazo_url){
-          var pattern = "[%s] @%s : %sさん、お客様がお見えになりました。\n%s";
-          var source = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name, gyazo_url);
+          var pattern = "[%s] @%s : %sさん、お客様がお見えになりました。";
+          var message = sprintf(pattern, user.post_name, user.jid.split('.')[0], user.family_name);
+          var sources = [message, gyazo_url];
+
+          var idobata_comment = user.comment.match(/<!-- idobata:(.*) -->/);
+          if (idobata_comment) {
+            sources.push(idobata_comment[1]);
+          }
+
+          var source = sources.join("\n");
           postToIdobata(source);
         }).fail(function(msg){
           console.log('fail');
