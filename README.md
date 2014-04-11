@@ -39,3 +39,9 @@ Array
 
 [install]: https://chrome.google.com/webstore/detail/hook-facetouch-front/ekpikmnnbikmmaheeolcmlijhmmggkoo
 [facetouch-front]: https://www.facetouch.jp/front/
+
+### その他
+facetouch個人情報管理ページのコメント欄に、以下のようなコメントを書くと`idobata:`以降の文字がidobataにポストされます。
+```
+<!-- idobata:えっ！もやしに来客が!? -->
+```
