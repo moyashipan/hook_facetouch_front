@@ -1,21 +1,21 @@
 {
-	"manifest_version": 2,
+  "manifest_version": 2,
 
-	"name": "Hook Facetouch Front",
-	"description": "FaceTouchからのHTTPリクエストをフックしてIRCに通知を行います",
-	"version": "0.3.1",
-	"icons": {
-		"128": "icon128.png"
-	},
+  "name": "Hook Facetouch Front",
+  "description": "FaceTouchからのHTTPリクエストをフックしてIRCに通知を行います",
+  "version": "0.3.1",
+  "icons": {
+    "128": "icon128.png"
+  },
 
-	"background": {
-		"scripts": ["lib/jquery.min.js", "background.js", "lib/sprintf.min.js"]
-	},
-	"options_page": "options.html",
-	"permissions": [
-		"webRequest",
-		"http://*/",
-		"https://*/"
-	]
+  "background": {
+    "scripts": ["lib/jquery.min.js", "background.js", "lib/sprintf.min.js"]
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "webRequest",
+    "http://*/",
+    "https://*/"
+  ]
 }
 
