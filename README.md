@@ -5,6 +5,7 @@ Messaging from FaceTouch to IRC
 
 
 ### user情報の例
+実際にはLowerCamelCase
 ```
 Array
 (
@@ -12,15 +13,16 @@ Array
     [image_path] => /webApi/getMemberImage/9999/list?key=%HASH_192_CHAR%
     [user_id] => 9999
     [jid] => moyashipan.hoge.com
-    [family_name] => もや本
-    [first_name] => パン一郎
-    [family_name_kana] => モヤモト
-    [first_name_kana] => パンイチロウ
+    [full_name] => もや本 パン一郎
+    [full_name_kana] => モヤモト パンイチロウ
     [post_id1] => 12345
     [post_name] => 開発 # 独自に追加
     [comment] =>
     [backoffice_tantou_flag] => false
     [substitute] =>
+    [display_flag] => true
+    [firstLetter_id] => 123
+    [substitute] => [123, 456, 789] # バックオフィス達
 )
 ```
 
